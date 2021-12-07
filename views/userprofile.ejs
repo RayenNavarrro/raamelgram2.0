@@ -4,35 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logged in</title>
+    <title>Uploaded Images</title>
     <link rel="stylesheet" href="/views/userprofile.css">
 </head>
 <body>
-    <div class="navbar">
-        <a href="/userprofile">Home</a>
-        <a href="/userimages">Profile</a>
+	<div class="navbar">
+        <a href="/userimages">Home</a>
+        <a href="/userprofile">Profile</a>
         <a href="/uploadImages">Upload</a>
         <a href="/logout">Logout</a>
     </div>
     <h1>
-        User Apps
-    </h1>
-    <p>
-        <div>
-        After Login the user will reach here.
-        </div>
-    </p>
-    <div class="Home">
-        <div class="Post">
-            <div class="Image">
-                <img src="https://cdn.dnaindia.com/sites/default/files/styles/half/public/2021/10/30/1003187-ballon-d-or.jpg" alt="">
-            </div>
-            <div class="Content">
-                <div class="title">A cool Titel / by @raynav04</div>
-                <div class="description">Nur für de Elvir</div>
-                
-            </div>
-        </div>
-    </div>
+		peter
+	</h1>
+	
+	<div>
+		<% items.forEach(function(image) { %>
+		<div>
+			<div class="Home">
+				<div class="Post">
+					<div class="Image">
+						<img src="data:image/<%=image.img.contentType%>;base64,
+							<%=image.img.data.toString('base64')%>">
+					</div>
+					<div class="Content">
+						<div class="title"><%= image.name %></div>
+						<div class="description"><%= image.desc %></div>
+		</div>
+		<% }) %>
+	</div>
 </body>
 </html>

@@ -63,8 +63,18 @@ app.get("/", (req,res) =>{
 })
 
 app.get("/userprofile",isLoggedIn ,(req,res) => {
-    res.render("userprofile");
-})
+    imgModel.find({}, (err, items) => {
+		if (err) {
+			//console.log('storing ERROR')
+			console.log(err);
+			res.status(500).send('An error occurred', err);
+		}
+		else {
+			//res.render('imagesPage', { items: items });
+			res.render('userprofile', { items: items });
+		}
+	});
+});
 
 app.get('/uploadImages', isLoggedIn, (req, res) => {
 	imgModel.find({}, (err, items) => {
