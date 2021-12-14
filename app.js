@@ -13,6 +13,8 @@ const express               =  require('express'),
 var fs = require('fs');
 var path = require('path');
 
+var loggedinUser;
+
 //Connecting database
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
 	console.log('connected to ' + process.env.MONGO_URL)
@@ -62,8 +64,10 @@ app.get("/", (req,res) =>{
     res.render("home");
 })
 
-app.get("/userprofile",isLoggedIn ,(req,res) => {
-    imgModel.find({}, (err, items) => {
+app.get("/userprofile",isLoggedIn, async(req,res) => {
+	let user = await User.findOne({username: req.user.username});
+	loggedinUser = user.username;
+	imgModel.find({'username': loggedinUser}, (err, items) => {
 		if (err) {
 			//console.log('storing ERROR')
 			console.log(err);
@@ -90,7 +94,9 @@ app.get('/uploadImages', isLoggedIn, (req, res) => {
 	});
 });
 
-app.post('/', upload.single('image'), (req, res, next) => {
+app.post('/', upload.single('image'), async(req, res, next) => {
+
+	let user = await User.findOne({username: req.user.username});
 
 	var obj = {
 		name: req.body.name,
@@ -98,7 +104,9 @@ app.post('/', upload.single('image'), (req, res, next) => {
 		img: {
 			data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
-		}
+		},
+		username: user.username
+
 	}
 	imgModel.create(obj, (err, item) => {
 		if (err) {
