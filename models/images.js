@@ -10,8 +10,7 @@ var imageSchema = new mongoose.Schema({
 	{
 		data: Buffer,
 		contentType: String
-	},
-	likes: Number
+	}
 });
 
 module.exports = mongoose.model('Image', imageSchema);
