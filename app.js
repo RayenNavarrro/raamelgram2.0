@@ -84,7 +84,7 @@ app.get('/clicked/*', async(req, res) => {
 			return res.send(500, {error: err});
 		}  else {
 			console.log(likes);
-			res.redirect("/userprofile")
+			res.redirect("/userprofile	")
 		}
 	});
 });
@@ -113,7 +113,7 @@ app.post('/', upload.single('image'), (req, res, next) => {
 			data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
 		},
-		likes: 0
+		likes: 0,
 	}
 	imgModel.create(obj, (err, item) => {
 		if (err) {
