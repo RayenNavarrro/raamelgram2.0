@@ -79,6 +79,20 @@ app.get("/userprofile",isLoggedIn, async(req,res) => {
 		}
 	});
 });
+app.get('/clicked/*', async(req, res) => {
+	const {id, name} = req.query;
+	let img = await imgModel.findOne({name: name});
+	let likes = img.likes;
+	imgModel.findOneAndUpdate({name: name}, {likes: ++likes}, function(err, doc) {
+		if (err) {
+			return res.send(500, {error: err});
+		}  else {
+			console.log(likes);
+			res.redirect("/userprofile	")
+		}
+	});
+});
+
 
 app.get('/uploadImages', isLoggedIn, (req, res) => {
 	imgModel.find({}, (err, items) => {
