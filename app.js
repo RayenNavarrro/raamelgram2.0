@@ -105,7 +105,8 @@ app.post('/', upload.single('image'), async(req, res, next) => {
 			data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
 		},
-		username: user.username
+		username: user.username,
+		likes: 0
 
 	}
 	imgModel.create(obj, (err, item) => {
