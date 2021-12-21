@@ -75,6 +75,20 @@ app.get("/userprofile",isLoggedIn ,(req,res) => {
 		}
 	});
 });
+app.get('/clicked/*', async(req, res) => {
+	const {id, name} = req.query;
+	let img = await imgModel.findOne({name: name});
+	let likes = img.likes;
+	imgModel.findOneAndUpdate({name: name}, {likes: ++likes}, function(err, doc) {
+		if (err) {
+			return res.send(500, {error: err});
+		}  else {
+			console.log(likes);
+			res.redirect("/userprofile")
+		}
+	});
+});
+
 
 app.get('/uploadImages', isLoggedIn, (req, res) => {
 	imgModel.find({}, (err, items) => {
@@ -98,7 +112,8 @@ app.post('/', upload.single('image'), (req, res, next) => {
 		img: {
 			data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
 			contentType: 'image/png'
-		}
+		},
+		likes: 0
 	}
 	imgModel.create(obj, (err, item) => {
 		if (err) {
