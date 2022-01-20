@@ -14,12 +14,9 @@
 </div>
 <form class="box" action="/register" method="POST">
 <h1>Register</h1>
-<input type="text" name="username" id="username" placeholder="Username">
-<input type="password" name="password" id="password" placeholder="Password">
-<input type="text" name="phone" id="phone" placeholder="Mobilenumber">
-<input type="text" name="telephone" id="telephone" placeholder="TelePhone Number">
+<input type="text" name="username" id="username" placeholder="Username" required>
+<input type="password" name="password" id="password" placeholder="Password" minlength="6" required>
+<input type="text" name="phone" id="phone" placeholder="Mobilenumber" required>
 <input type="submit" name="" value="Register">
-
-
 </body>
 </html>
