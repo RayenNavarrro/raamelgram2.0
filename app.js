@@ -45,6 +45,7 @@ app.use(passport.session());
 
 // Schritt 5 - Set up multer um upload files zu speichern
 var multer = require('multer');
+const { get } = require('http');
 
 var storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -64,9 +65,21 @@ app.get("/", (req,res) =>{
     res.render("home");
 })
 
+
+app.get('/adminPage', (req,res) => {
+	User.find().sort({ createdAt: -1})
+		.then((result) =>{
+			res.render('adminPage', {users: result})
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+})
+
 app.get("/userprofile",isLoggedIn, async(req,res) => {
 	let user = await User.findOne({username: req.user.username});
 	loggedinUser = user.username;
+	console.log(loggedinUser);
 	imgModel.find({'username': loggedinUser}, (err, items) => {
 		if (err) {
 			//console.log('storing ERROR')
@@ -75,7 +88,10 @@ app.get("/userprofile",isLoggedIn, async(req,res) => {
 		}
 		else {
 			//res.render('imagesPage', { items: items });
-			res.render('userprofile', { items: items });
+			console.log(items);
+
+			res.render('userprofile', { items: items, loggedinUser: loggedinUser });
+			console.log(loggedinUser);
 		}
 	});
 });
