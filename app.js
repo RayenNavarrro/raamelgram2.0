@@ -109,7 +109,9 @@ app.get('/clicked/*', async(req, res) => {
     });
 });
 
-app.get('/uploadImages', isLoggedIn, (req, res) => {
+app.get('/uploadImages', isLoggedIn, async(req, res) => {
+	let user = await User.findOne({username: req.user.username});
+			loggedinUser = user.username;
 	imgModel.find({}, (err, items) => {
 		if (err) {
 			//console.log('storing ERROR')
@@ -118,7 +120,8 @@ app.get('/uploadImages', isLoggedIn, (req, res) => {
 		}
 		else {
 			//res.render('imagesPage', { items: items });
-			res.render('uploadImages', { items: items });
+			
+			res.render('uploadImages', { items: items, loggedinUser: loggedinUser });
 		}
 	});
 });
@@ -163,26 +166,32 @@ app.get('/', (req, res) => {
 	});
 });
 
-app.get('/userimages', (req, res) => {
+app.get('/userimages', async(req, res) => {
+	let user = await User.findOne({username: req.user.username});
+			loggedinUser = user.username;
 	imgModel.find({}, (err, items) => {
 		if (err) {
 			console.log(err);
 			res.status(500).send('An error occurred', err);
 		}
 		else {
-			res.render('displayImg', { items: items });
+			
+			res.render('displayImg', { items: items, loggedinUser: loggedinUser  });
 		}
 	});
 });
 
-app.get('/userimages', (req, res) => {
+app.get('/userimages', async(req, res) => {
+	let user = await User.findOne({username: req.user.username});
+	loggedinUser = user.username;
 	imgModel.find({}, (err, items) => {
 		if (err) {
 			console.log(err);
 			res.status(500).send('An error occurred', err);
 		}
 		else {
-			res.render('displayImg', { items: items });
+			
+			res.render('displayImg', { items: items , loggedinUser: loggedinUser });
 		}
 	});
 });
