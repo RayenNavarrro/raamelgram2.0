@@ -9,10 +9,9 @@
 </head>
 <body>
 	<div class="navbar">
-        <%if(username = "123"){%>
+        <%if(loggedinUser == 'admin'){%>
             <a href="/adminPage">Admin</a>
         <%}else{ %>  
-            <a href="/adminPage">NotAdmin</a>
         <% } %>
         
         <a href="/userimages">Home</a>
