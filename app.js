@@ -79,6 +79,7 @@ app.get('/adminPage', (req,res) => {
 app.get("/userprofile",isLoggedIn, async(req,res) => {
 	let user = await User.findOne({username: req.user.username});
 	loggedinUser = user.username;
+	console.log(loggedinUser);
 	imgModel.find({'username': loggedinUser}, (err, items) => {
 		if (err) {
 			//console.log('storing ERROR')
@@ -87,7 +88,10 @@ app.get("/userprofile",isLoggedIn, async(req,res) => {
 		}
 		else {
 			//res.render('imagesPage', { items: items });
-			res.render('userprofile', { items: items });
+			console.log(items);
+
+			res.render('userprofile', { items: items, loggedinUser: loggedinUser });
+			console.log(loggedinUser);
 		}
 	});
 });

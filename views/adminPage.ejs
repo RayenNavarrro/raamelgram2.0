@@ -9,7 +9,12 @@
 </head>
 <body>
 	<div class="navbar">
-        <a href="/adminPage">Admin</a>
+        <%if(username = "123"){%>
+            <a href="/adminPage">Admin</a>
+        <%}else{ %>  
+            <a href="/adminPage">NotAdmin</a>
+        <% } %>
+        
         <a href="/userimages">Home</a>
         <a href="/userprofile">Profile</a>
         <a href="/uploadImages">Upload</a>
